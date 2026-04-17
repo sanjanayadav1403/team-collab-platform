@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
@@ -19,6 +21,21 @@ const { errorHandler } = require('./middleware/errorHandler');
 
 // Import DB to trigger connection test on startup
 require('./utils/db');
+
+const pool = require('./utils/db');
+
+// Schema migration on startup
+async function runMigrations() {
+  try {
+    const sql = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
+    await pool.query(sql);
+    console.log('Tables ready!');
+  } catch (err) {
+    console.error('Migration error:', err.message);
+  }
+}
+
+runMigrations();
 
 const app = express();
 const httpServer = http.createServer(app);
