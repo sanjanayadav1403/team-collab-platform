@@ -11,7 +11,7 @@ const {
 const { findUserByEmail, findUserById } = require('../services/authService');
 const { generateInviteToken, verifyToken } = require('../utils/jwt');
 const { createError } = require('../middleware/errorHandler');
-const { sendInviteEmail } = require('../services/emailservice');
+const { sendInviteEmail } = require('../services/emailService');
 
 const generateSlug = (name) => {
   const base = name
