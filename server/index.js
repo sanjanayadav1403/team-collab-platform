@@ -27,7 +27,7 @@ const pool = require('./utils/db');
 // Schema migration on startup
 async function runMigrations() {
   try {
-    const sql = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
+    const sql = fs.readFileSync(path.join(__dirname, 'db', 'schema.sql'), 'utf8');
     await pool.query(sql);
     console.log('Tables ready!');
   } catch (err) {
